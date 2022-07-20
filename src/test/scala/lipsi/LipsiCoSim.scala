@@ -2,7 +2,7 @@
  * Copyright: 2017, Technical University of Denmark, DTU Compute
  * Author: Martin Schoeberl (martin@jopdesign.com)
  * License: Simplified BSD License
- * 
+ *
  * Test Lipsi.
  */
 
@@ -18,11 +18,11 @@ class LipsiCoSim(dut: Lipsi, arg0: String) extends PeekPokeTester(dut) {
 
   var run = true
   var maxInstructions = 30
-  while(run) {
+  while (run) {
 
     expect(dut.io.dbg.pc, lsim.pc, "PC shall be equal.\n")
     expect(dut.io.dbg.accu, lsim.accu, "Accu shall be equal.\n")
-    
+
     step(1)
     lsim.step()
     maxInstructions -= 1
@@ -34,8 +34,8 @@ class LipsiCoSim(dut: Lipsi, arg0: String) extends PeekPokeTester(dut) {
 object LipsiCoSim {
   def main(args: Array[String]): Unit = {
     println("Co-simulation of Lipsi")
-    iotesters.Driver.execute(Array[String](), () => new Lipsi(args(0))) {
-      c => new LipsiCoSim(c, args(0))
+    iotesters.Driver.execute(Array[String](), () => new Lipsi(args(0))) { c =>
+      new LipsiCoSim(c, args(0))
     }
 
     /* Chisel 2
@@ -44,6 +44,6 @@ object LipsiCoSim {
       () => Module(new Lipsi(args(0)))) {
         f => new LipsiCoSim(f, args(0))
       }
-      */
+     */
   }
 }
