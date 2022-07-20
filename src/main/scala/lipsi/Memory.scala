@@ -2,7 +2,7 @@
  * Copyright: 2017, Technical University of Denmark, DTU Compute
  * Author: Martin Schoeberl (martin@jopdesign.com)
  * License: Simplified BSD License
- * 
+ *
  * Lipsi, a very minimalistic processor.
  */
 
@@ -11,15 +11,15 @@ package lipsi
 import chisel3._
 import lipsi.util._
 
-/**
- * The memory for Lipsi.
- *
- * 256 byte instructions and 256 bytes data, using exactly one FPGA memory block
- * with preinitialized data.
- * 
- * As we cannot express initialized memory in Chisel (yet) we have a multiplexer between
- * memory and the instruction ROM table. Shall be substituted by a BlackBox and generated VHDL or Verilog.
- */
+/** The memory for Lipsi.
+  *
+  * 256 byte instructions and 256 bytes data, using exactly one FPGA memory
+  * block with preinitialized data.
+  *
+  * As we cannot express initialized memory in Chisel (yet) we have a
+  * multiplexer between memory and the instruction ROM table. Shall be
+  * substituted by a BlackBox and generated VHDL or Verilog.
+  */
 class Memory(prog: String) extends Module {
   val io = IO(new Bundle {
     val rdAddr = Input(UInt(9.W))
@@ -42,7 +42,7 @@ class Memory(prog: String) extends Module {
   when(io.wrEna) {
     mem(io.wrAddr) := io.wrData
   }
-  
+
   // Output MUX for now
   io.rdData := Mux(rdAddrReg(8), data, instr)
 }

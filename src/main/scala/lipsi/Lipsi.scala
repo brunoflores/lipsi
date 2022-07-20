@@ -2,7 +2,7 @@
  * Copyright: 2017, Technical University of Denmark, DTU Compute
  * Author: Martin Schoeberl (martin@jopdesign.com)
  * License: Simplified BSD License
- * 
+ *
  * Lipsi, a very tiny processor.
  */
 
@@ -33,7 +33,7 @@ ALU function:
 
 add, sub, adc, sbb, and, or, xor, ld
 
-*/
+ */
 
 class DebugData extends Bundle {
   val pc = UInt(8.W)
@@ -253,7 +253,7 @@ class LipsiTop(prog: String) extends Module {
     lipsis(0).io.din := io.din
     io.dout := lipsis(N - 1).io.dout
     for (i <- 1 until N) lipsis(i).io.din := lipsis(i - 1).io.dout
-    
+
   } else {
     val lipsi = Module(new Lipsi(prog))
 
@@ -266,11 +266,13 @@ class LipsiTop(prog: String) extends Module {
 object LipsiMain {
   def main(args: Array[String]): Unit = {
     println("Generating the Lipsi hardware")
-    (new chisel3.stage.ChiselStage).execute(Array("--target-dir", "generated"),
-      Seq(ChiselGeneratorAnnotation(() => new LipsiTop(args(0)))))
+    (new chisel3.stage.ChiselStage).execute(
+      Array("--target-dir", "generated"),
+      Seq(ChiselGeneratorAnnotation(() => new LipsiTop(args(0))))
+    )
     /* Chisel 2
     chiselMain(Array("--backend", "v", "--targetDir", "generated"),
       () => Module(new LipsiTop(args(0))))
-      */
+     */
   }
 }
